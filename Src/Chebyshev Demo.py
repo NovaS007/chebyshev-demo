@@ -12,65 +12,65 @@ for i in datapoints:
 sd = (pstdev(realdata))
 mu = float(mean(realdata))
 k_value = float(input("What is your K-value? "))
-upperbound = mu + k_value * sd
-lowerbound = mu - k_value * sd
+upperBound = mu + k_value * sd
+lowerBound = mu - k_value * sd
 
 #calculates the number of values within mu +- k_value * sd
 values_in = []
 for j in realdata:
-    if lowerbound <= j <= upperbound:
+    if lowerBound <= j <= upperBound:
         values_in.append(j)
 
 #calculates the percentage of datapoints that are within the range and the minimum possible amount
 total = len(realdata)
 num_in = len(values_in)
-percentin = num_in / total * 100
-minpercentk = (1 - (1/(k_value ** 2))) * 100
+percentIn = num_in / total * 100
+minPercentK = (1 - (1 / (k_value ** 2))) * 100
 
 #prints out our values
 print("The standard deviation of this data set is " + str(sd) + ".")
 print("The mean of this data set is " + str(mu) + ".")
-print("The absolute minimum ratio of points within " + str(k_value) + " standard deviation(s) is " + str(minpercentk) + "%.")
-print("The actual ratio of points within " + str(k_value) + " standard deviation(s) is " + str(percentin) + "%.")
-print(str(k_value) + " standard deviation(s) below the mean is " + str(lowerbound) + ".")
-print(str(k_value) + " standard deviation(s) above the mean is " + str(upperbound) + ".")
+print("The absolute minimum ratio of points within " + str(k_value) + " standard deviation(s) is " + str(minPercentK) + "%.")
+print("The actual ratio of points within " + str(k_value) + " standard deviation(s) is " + str(percentIn) + "%.")
+print(str(k_value) + " standard deviation(s) below the mean is " + str(lowerBound) + ".")
+print(str(k_value) + " standard deviation(s) above the mean is " + str(upperBound) + ".")
 
 #function for number line graph
-def chebyshevplot(lbound, ubound, rdata):
+def chebyshevplot(lowerBound, upperBound, realdata):
     fig1 = plt.figure()
     ax = fig1.add_subplot()
     ax.set_ylim(0,5)
-    if lowerbound > 0 and upperbound > 0:
-        ax.set_xlim (-2 * lowerbound, 2 * upperbound)
-    elif lowerbound < 0 < upperbound:
-        ax.set_xlim(2 * lowerbound, 2 * upperbound)
-    elif lowerbound < 0 and upperbound < 0:
-        ax.set_xlim(2 * lowerbound, -2 * upperbound)
-    elif lowerbound == 0 and upperbound == 0:
+    if lowerBound > 0 and upperBound > 0:
+        ax.set_xlim (-2 * lowerBound, 2 * upperBound)
+    elif lowerBound < 0 < upperBound:
+        ax.set_xlim(2 * lowerBound, 2 * upperBound)
+    elif lowerBound < 0 and upperBound < 0:
+        ax.set_xlim(2 * lowerBound, -2 * upperBound)
+    elif lowerBound == 0 and upperBound == 0:
         ax.set_xlim(-20,20)
-    elif lowerbound == 0 and upperbound > 0:
-        ax.set_xlim(-20, 2 * upperbound)
+    elif lowerBound == 0 and upperBound > 0:
+        ax.set_xlim(-20, 2 * upperBound)
     else:
-        ax.set_xlim(2 * lowerbound, 20)
+        ax.set_xlim(2 * lowerBound, 20)
 
-    xmin = lbound
-    xmax = ubound
+    xMinimum = lowerBound
+    xMaximum = upperBound
 
     y = 1.75
     height = 0.1
 
-    plt.hlines(y, xmin, xmax)
-    plt.vlines(xmin, y - height, y + height, "Red")
-    plt.vlines(xmax, y - height, y + height, "Red")
+    plt.hlines(y, xMinimum, xMaximum)
+    plt.vlines(xMinimum, y - height, y + height, "Red")
+    plt.vlines(xMaximum, y - height, y + height, "Red")
 
-    ax.text(-10,4, f'The minimum possible amount within is {round(minpercentk, 2)}%')
-    ax.text(-10,3.5, f'The actual amount within is {round(percentin, 2)}%')
+    ax.text(-10, 4, f'The minimum possible amount within is {round(minPercentK, 2)}%')
+    ax.text(-10, 3.5, f'The actual amount within is {round(percentIn, 2)}%')
 
     # draw a point on the line
-    for t in rdata:
+    for t in realdata:
         plt.plot(t,1.75,'o')
     ax.set_axis_off()
     plt.show()
 
 # calls the function
-callable(chebyshevplot(lowerbound, upperbound, realdata))
+callable(chebyshevplot(lowerBound, upperBound, realdata))
